@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Illuminazione giardino di casa</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* layout: colonna unica, pianta in card + tabella sotto */
+:root{--bg:#f6f7f2;--fg:#23261f;--muted:#5d6156;--card:#ffffff;--line:#d6d9cc;--lot:#e6efd9;--house:#f3d39a;--street:#d5d6cf;--accent:#3B6D11}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171a15;--fg:#e9ebe3;--muted:#a9ad9f;--card:#20241d;--line:#3a3f35;--lot:#24321c;--house:#5c3d10;--street:#33352f;--accent:#97C459;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171a15;--fg:#e9ebe3;--muted:#a9ad9f;--card:#20241d;--line:#3a3f35;--lot:#24321c;--house:#5c3d10;--street:#33352f;--accent:#97C459;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:-apple-system,"Segoe UI",system-ui,sans-serif;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:900px;margin:0 auto;padding-block:16px 32px}
+h1{font-size:24px;font-weight:650;margin:8px 0 4px;text-wrap:balance}
+h2{font-size:17px;margin:24px 0 6px}
+p.sub{color:var(--muted);margin:0 0 16px;font-size:14px;max-width:65ch}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 12px;font-size:14px}
+.ctrl label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;overflow-x:auto}
+svg{min-width:560px}
+svg text{font-family:inherit;font-size:12px;fill:var(--fg)}
+svg .lbl{fill:var(--muted)}
+.hide{display:none}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:12px 0}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+</style>
+</head><body>
+<main>
+<h1>Illuminazione del giardino</h1>
+<p class="sub">Pianta indicativa in scala (1 m ≈ 17 px). Casa 9,5 × 11,2 m. Misure a passi (1 passo ≈ 0,70 m). Proposta fase 1: lampioncini + faretti su 2 comandi.</p>
+<div class="ctrl">
+<label><input type="checkbox" id="t-imp" checked> Impianto esistente (pozzetti e tubi)</label>
+<label><input type="checkbox" id="t-a" checked> Circuito A – lampioncini + applique (A1–A12, W1–W4)</label>
+<label><input type="checkbox" id="t-b" checked> Circuito B – faretti piante</label>
+</div>
+<div class="card">
+<svg viewBox="0 0 680 610" width="100%" role="img" aria-label="Pianta del giardino con impianto e proposta luci">
+<polygon points="191,40 562,40 562,366 120,496" fill="var(--lot)" stroke="#3B6D11" stroke-width="1"/>
+<line x1="120" y1="496" x2="562" y2="366" stroke="#3B6D11" stroke-width="6" stroke-opacity="0.45"/>
+<line x1="505" y1="259" x2="562" y2="292" stroke="#854F0B" stroke-width="1.5" stroke-dasharray="5 3"/>
+<rect x="576" y="40" width="64" height="456" rx="4" fill="var(--street)"/>
+<text x="608" y="470" text-anchor="middle" class="lbl">Strada</text>
+<rect x="317" y="69" width="161" height="190" fill="var(--house)" stroke="#BA7517" stroke-width="0.5"/>
+<text x="380" y="160" text-anchor="middle" style="font-size:14px;font-weight:600">Casa</text>
+<text x="397" y="56" text-anchor="middle" class="lbl">Legnaia (esclusa)</text>
+<rect x="452" y="230" width="26" height="29" fill="#5DCAA5" fill-opacity="0.6"/>
+<rect x="317" y="259" width="161" height="20" fill="#F0997B" fill-opacity="0.6"/>
+<rect x="297" y="69" width="20" height="210" fill="#F0997B" fill-opacity="0.6"/>
+<rect x="501" y="208" width="61" height="10" fill="#B4B2A9"/>
+<rect x="479" y="200" width="22" height="30" fill="#888780"/>
+<line x1="562" y1="202" x2="562" y2="223" stroke="#185FA5" stroke-width="6"/>
+<text x="608" y="216" text-anchor="middle" class="lbl">Pedonale</text>
+<line x1="562" y1="299" x2="562" y2="342" stroke="#BA7517" stroke-width="6"/>
+<line x1="562" y1="342" x2="562" y2="358" stroke="#BA7517" stroke-width="6" stroke-dasharray="3 3"/>
+<text x="608" y="320" text-anchor="middle" class="lbl">Carraio</text>
+<text x="608" y="335" text-anchor="middle" class="lbl">2,5→3,5 m</text>
+<g fill="#639922" fill-opacity="0.35">
+<circle cx="535" cy="72" r="15"/><circle cx="535" cy="165" r="10"/><circle cx="535" cy="262" r="13"/>
+<circle cx="478" cy="372" r="9"/><circle cx="415" cy="345" r="13"/><circle cx="215" cy="335" r="22"/>
+<circle cx="268" cy="300" r="7"/><circle cx="250" cy="205" r="14"/><circle cx="255" cy="125" r="13"/>
+</g>
+<circle cx="522" cy="122" r="8" fill="#85B7EB"/>
+<text x="215" y="392" text-anchor="middle" class="lbl">Pino</text>
+<text x="415" y="372" text-anchor="middle" class="lbl">Glicine</text>
+<text x="270" y="200" class="lbl">Mimosa / salottino</text>
+<text x="300" y="460" text-anchor="middle" class="lbl" style="font-size:14px">Prato</text>
+
+<g id="l-imp">
+<path d="M466 192 L476 192" stroke="#534AB7" stroke-width="2" fill="none"/>
+<path d="M476 186 L476 74 L320 74" stroke="#534AB7" stroke-width="2.5" stroke-dasharray="7 4" fill="none"/>
+<path d="M317 72 L215 60" stroke="#A32D2D" stroke-width="2.5" stroke-dasharray="3 2" fill="none"/>
+<line x1="482" y1="190" x2="489" y2="190" stroke="#A32D2D" stroke-width="2.5" stroke-dasharray="3 2"/>
+<polyline points="491,140 491,190 510,198 510,256 491,266 548,302" fill="none" stroke="#0F6E56" stroke-width="2"/>
+<polyline points="215,60 199,163 183,266 166,369 150,472 277,435 403,398 530,360" fill="none" stroke="#0F6E56" stroke-width="2"/>
+<line x1="277" y1="435" x2="285" y2="368" stroke="#0F6E56" stroke-width="2"/>
+<line x1="403" y1="398" x2="370" y2="333" stroke="#0F6E56" stroke-width="2"/>
+<rect x="452" y="183" width="14" height="18" rx="2" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+<rect x="472" y="185" width="10" height="10" rx="2" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+<text x="446" y="196" text-anchor="end">Quadro</text>
+<g fill="#F1EFE8" stroke="#2C2C2A" stroke-width="1">
+<rect x="487" y="136" width="8" height="8"/><rect x="487" y="186" width="8" height="8"/><rect x="487" y="262" width="8" height="8"/><rect x="544" y="298" width="8" height="8"/>
+<rect x="211" y="56" width="8" height="8"/><rect x="195" y="159" width="8" height="8"/><rect x="179" y="262" width="8" height="8"/><rect x="162" y="365" width="8" height="8"/><rect x="146" y="468" width="8" height="8"/>
+<rect x="273" y="431" width="8" height="8"/><rect x="399" y="394" width="8" height="8"/><rect x="526" y="356" width="8" height="8"/>
+<rect x="281" y="364" width="8" height="8"/><rect x="366" y="329" width="8" height="8"/>
+</g>
+<text x="480" y="144" text-anchor="end">P2</text><text x="480" y="182" text-anchor="end">P1</text><text x="480" y="280" text-anchor="end">P3</text><text x="540" y="318" text-anchor="end">P4</text>
+<text x="205" y="66" text-anchor="end">O1</text><text x="189" y="167" text-anchor="end">O2</text><text x="173" y="270" text-anchor="end">O3</text><text x="156" y="373" text-anchor="end">O4</text><text x="140" y="476" text-anchor="end">O5</text>
+<text x="277" y="452" text-anchor="middle">S1</text><text x="403" y="415" text-anchor="middle">S2</text><text x="530" y="380" text-anchor="middle">S3</text>
+<text x="295" y="372">C1</text><text x="352" y="330" text-anchor="end">C2</text>
+</g>
+
+<g id="l-a">
+<g fill="#FAC775" fill-opacity="0.22">
+<circle cx="506" cy="128" r="60"/><circle cx="512" cy="196" r="60"/><circle cx="508" cy="274" r="60"/><circle cx="548" cy="288" r="60"/>
+<circle cx="216" cy="170" r="60"/><circle cx="205" cy="250" r="60"/><circle cx="514" cy="348" r="60"/>
+</g>
+<g stroke="#BA7517" stroke-width="1" stroke-dasharray="2 2">
+<line x1="491" y1="140" x2="506" y2="128"/><line x1="491" y1="190" x2="512" y2="196"/><line x1="491" y1="266" x2="508" y2="274"/><line x1="548" y1="302" x2="548" y2="288"/>
+<line x1="199" y1="163" x2="216" y2="170"/><line x1="183" y1="266" x2="205" y2="250"/><line x1="530" y1="360" x2="514" y2="348"/>
+</g>
+<g fill="#FAC775" stroke="#854F0B" stroke-width="1.2">
+<circle cx="506" cy="128" r="5"/><circle cx="512" cy="196" r="5"/><circle cx="508" cy="274" r="5"/><circle cx="548" cy="288" r="5"/>
+<circle cx="216" cy="170" r="5"/><circle cx="205" cy="250" r="5"/><circle cx="514" cy="348" r="5"/>
+</g>
+<g style="font-weight:600">
+<text x="516" y="132">A1</text><text x="520" y="200">A2</text><text x="516" y="284">A3</text><text x="534" y="284" text-anchor="end">A4</text>
+<text x="226" y="174">A5</text><text x="215" y="254">A6</text><text x="500" y="344" text-anchor="end">A7</text>
+</g>
+</g>
+
+<g id="l-c">
+<g fill="#FAC775" fill-opacity="0.22">
+<circle cx="290" cy="424" r="60"/><circle cx="412" cy="386" r="60"/><circle cx="300" cy="360" r="60"/><circle cx="170" cy="455" r="60"/><circle cx="232" cy="78" r="60"/>
+<circle cx="317" cy="110" r="68"/><circle cx="317" cy="215" r="68"/><circle cx="360" cy="259" r="68"/><circle cx="440" cy="259" r="68"/>
+</g>
+<path d="M317 72 L317 259 L445 259" stroke="#A32D2D" stroke-width="2" stroke-dasharray="6 3" fill="none"/>
+<g stroke="#BA7517" stroke-width="1" stroke-dasharray="2 2">
+<line x1="277" y1="435" x2="290" y2="424"/><line x1="403" y1="398" x2="412" y2="386"/><line x1="285" y1="368" x2="300" y2="360"/><line x1="150" y1="472" x2="170" y2="455"/><line x1="215" y1="60" x2="232" y2="78"/>
+</g>
+<g fill="#FAC775" stroke="#854F0B" stroke-width="1.2">
+<circle cx="290" cy="424" r="5"/><circle cx="412" cy="386" r="5"/><circle cx="300" cy="360" r="5"/><circle cx="170" cy="455" r="5"/><circle cx="232" cy="78" r="5"/>
+</g>
+<g fill="#EF9F27" stroke="#633806" stroke-width="1">
+<rect x="312" y="105" width="10" height="10"/><rect x="312" y="210" width="10" height="10"/><rect x="355" y="254" width="10" height="10"/><rect x="435" y="254" width="10" height="10"/>
+</g>
+<g style="font-weight:600">
+<text x="300" y="428">A8</text><text x="422" y="390">A9</text><text x="310" y="356">A10</text><text x="180" y="452">A11</text><text x="242" y="88">A12</text>
+<text x="328" y="114">W1</text><text x="328" y="219">W2</text><text x="360" y="248" text-anchor="middle">W3</text><text x="440" y="248" text-anchor="middle">W4</text>
+</g>
+</g>
+
+<g id="l-b">
+<g stroke="#0F6E56" stroke-width="1" stroke-dasharray="2 2">
+<line x1="491" y1="140" x2="516" y2="92"/><line x1="491" y1="140" x2="522" y2="174"/><line x1="491" y1="266" x2="520" y2="270"/>
+<line x1="166" y1="369" x2="196" y2="354"/><line x1="166" y1="369" x2="234" y2="356"/><line x1="370" y1="333" x2="400" y2="352"/><line x1="183" y1="266" x2="240" y2="222"/>
+</g>
+<g fill="#5DCAA5" stroke="#04342C" stroke-width="1">
+<polygon points="516,86 522,97 510,97"/><polygon points="522,168 528,179 516,179"/><polygon points="520,264 526,275 514,275"/>
+<polygon points="196,348 202,359 190,359"/><polygon points="234,350 240,361 228,361"/><polygon points="400,346 406,357 394,357"/><polygon points="240,216 246,227 234,227"/>
+</g>
+<g style="font-weight:600">
+<text x="500" y="96" text-anchor="end">B1</text><text x="546" y="182">B2</text><text x="532" y="248">B3</text>
+<text x="186" y="346" text-anchor="end">B4</text><text x="244" y="370">B5</text><text x="410" y="362">B6</text><text x="252" y="230">B7</text>
+</g>
+</g>
+
+<g transform="translate(40,520)">
+<line x1="0" y1="0" x2="26" y2="0" stroke="#534AB7" stroke-width="2.5" stroke-dasharray="7 4"/><text x="32" y="4">Linea giardino a muro (esistente)</text>
+<line x1="300" y1="0" x2="326" y2="0" stroke="#0F6E56" stroke-width="2"/><text x="332" y="4">Tubo interrato posato (senza cavi)</text>
+<line x1="0" y1="22" x2="26" y2="22" stroke="#A32D2D" stroke-width="2.5" stroke-dasharray="3 2"/><text x="32" y="26">Da fare: cassetta 2→P1, legnaia→O1</text>
+<rect x="300" y="18" width="8" height="8" fill="#F1EFE8" stroke="#2C2C2A"/><text x="332" y="26">Pozzetto esistente (14)</text>
+<circle cx="13" cy="44" r="5" fill="#FAC775" stroke="#854F0B"/><text x="32" y="48">A · lampioncino tubolare 80 cm</text>
+<polygon points="313,38 319,49 307,49" fill="#5DCAA5" stroke="#04342C"/><text x="332" y="48">B · faretto a picchetto per piante</text>
+<line x1="0" y1="66" x2="26" y2="66" stroke="#888780" stroke-dasharray="2 2"/><text x="32" y="70">Breve derivazione pozzetto → luce (da fare)</text>
+<rect x="303" y="61" width="10" height="10" fill="#EF9F27" stroke="#633806"/><text x="332" y="70">W · applique a muro (tubo a muro da fare)</text>
+</g>
+</svg>
+</div>
+
+<h2>Proposta fase 1</h2>
+<div class="tw"><table>
+<tr><th>Circuito</th><th>Punto</th><th>Da pozzetto</th><th>Cosa illumina</th></tr>
+<tr><td rowspan="7"><span class="dot" style="background:#FAC775"></span>A · Lampioncini</td><td>A1</td><td>P2</td><td>Fascia nord-est, fontana</td></tr>
+<tr><td>A2</td><td>P1</td><td>Vialetto pedonale e piede della scala</td></tr>
+<tr><td>A3</td><td>P3</td><td>Angolo sud-est, sotto il terrazzino</td></tr>
+<tr><td>A4</td><td>P4</td><td>Carraio (fuori dal passaggio auto)</td></tr>
+<tr><td>A5</td><td>O2</td><td>Lato ovest, verso magnolia ovest</td></tr>
+<tr><td>A6</td><td>O3</td><td>Salottino / mimosa</td></tr>
+<tr><td>A7</td><td>S3</td><td>Discesa dal carraio sul prato basso</td></tr>
+<tr><td rowspan="9"><span class="dot" style="background:#FAC775"></span>A · Lampioncini e applique, parte bassa</td><td>A8</td><td>S1</td><td>Prato sud, lato siepe (ovest)</td></tr>
+<tr><td>A9</td><td>S2</td><td>Prato sud, lato siepe (centro)</td></tr>
+<tr><td>A10</td><td>C1</td><td>Centro prato sud</td></tr>
+<tr><td>A11</td><td>O5</td><td>Angolo sud-ovest, dietro il pino</td></tr>
+<tr><td>A12</td><td>O1</td><td>Angolo nord-ovest, dietro la legnaia</td></tr>
+<tr><td>W1</td><td>muro ovest</td><td>Applique: marciapiede ovest, porta nord</td></tr>
+<tr><td>W2</td><td>muro ovest</td><td>Applique: marciapiede ovest, porta sud / salottino</td></tr>
+<tr><td>W3</td><td>muro sud</td><td>Applique: marciapiede sud</td></tr>
+<tr><td>W4</td><td>muro sud</td><td>Applique: marciapiede sud, verso terrazzino</td></tr>
+<tr><td rowspan="7"><span class="dot" style="background:#5DCAA5"></span>B · Faretti</td><td>B1</td><td>P2</td><td>Magnolia nord-est</td></tr>
+<tr><td>B2</td><td>P2</td><td>Albero rosso dell'ingresso</td></tr>
+<tr><td>B3</td><td>P3</td><td>Magnolia sud-est</td></tr>
+<tr><td>B4–B5</td><td>O4</td><td>Pino gigante (2 faretti)</td></tr>
+<tr><td>B6</td><td>C2</td><td>Glicine</td></tr>
+<tr><td>B7</td><td>O3</td><td>Mimosa</td></tr>
+</table></div>
+<p class="sub">Posizioni indicative, da verificare sul posto. Tutti i 14 pozzetti esistenti sono utilizzati. Totale fase 1: 12 lampioncini, 4 applique, 7 faretti.</p>
+</main>
+<script>
+[['t-imp','l-imp'],['t-a','l-a'],['t-a','l-c'],['t-b','l-b']].forEach(([c,g])=>{
+ const cb=document.getElementById(c),el=document.getElementById(g);
+ cb.addEventListener('change',()=>el.classList.toggle('hide',!cb.checked));
+});
+</script>
+</body></html>
