@@ -1,52 +1,69 @@
 <!doctype html>
-<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Illuminazione giardino di casa</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <style>
-/* layout: colonna unica, pianta in card + tabella sotto */
-:root{--bg:#f6f7f2;--fg:#23261f;--muted:#5d6156;--card:#ffffff;--line:#d6d9cc;--lot:#e6efd9;--house:#f3d39a;--street:#d5d6cf;--accent:#3B6D11}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171a15;--fg:#e9ebe3;--muted:#a9ad9f;--card:#20241d;--line:#3a3f35;--lot:#24321c;--house:#5c3d10;--street:#33352f;--accent:#97C459;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#171a15;--fg:#e9ebe3;--muted:#a9ad9f;--card:#20241d;--line:#3a3f35;--lot:#24321c;--house:#5c3d10;--street:#33352f;--accent:#97C459;color-scheme:dark}
-body{background:var(--bg);color:var(--fg);font-family:-apple-system,"Segoe UI",system-ui,sans-serif;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-main{max-width:900px;margin:0 auto;padding-block:16px 32px}
+/* layout: colonna unica; pianta interattiva, poi comandi, schema cavi e materiali */
+:root{--bg:#f6f7f2;--fg:#23261f;--muted:#5d6156;--card:#ffffff;--line:#d6d9cc;--lot:#e6efd9;--house:#f3d39a;--street:#d5d6cf;--accent:#3B6D11;
+--c-ant:#D85A30;--c-lamp:#BA7517;--c-far:#0F6E56;--c-app:#534AB7;--c-pre:#185FA5}
+@media (prefers-color-scheme:dark){:root{--bg:#171a15;--fg:#e9ebe3;--muted:#a9ad9f;--card:#20241d;--line:#3a3f35;--lot:#24321c;--house:#5c3d10;--street:#33352f;--accent:#97C459;
+--c-ant:#F0997B;--c-lamp:#EF9F27;--c-far:#5DCAA5;--c-app:#AFA9EC;--c-pre:#85B7EB;color-scheme:dark}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,"Segoe UI",system-ui,sans-serif;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:920px;margin:0 auto;padding-block:16px 40px}
 h1{font-size:24px;font-weight:650;margin:8px 0 4px;text-wrap:balance}
-h2{font-size:17px;margin:24px 0 6px}
-p.sub{color:var(--muted);margin:0 0 16px;font-size:14px;max-width:65ch}
+h2{font-size:18px;margin:28px 0 8px}
+h3{font-size:15px;margin:18px 0 6px}
+p,li{max-width:70ch}
+p.sub{color:var(--muted);margin:0 0 16px;font-size:14px}
 .ctrl{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 12px;font-size:14px}
 .ctrl label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;overflow-x:auto}
-svg{min-width:560px}
+svg.map{min-width:580px;display:block}
 svg text{font-family:inherit;font-size:12px;fill:var(--fg)}
 svg .lbl{fill:var(--muted)}
+svg .b{font-weight:650}
 .hide{display:none}
 .tw{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:14px;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0 12px}
 th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-weight:600}
-.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+th{font-weight:600;color:var(--muted);font-size:13px}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.ok{color:var(--accent);font-weight:600}
+.todo{color:var(--c-ant);font-weight:600}
+ul{padding-left:20px}
 </style>
-</head><body>
+</head>
+<body>
 <main>
 <h1>Illuminazione del giardino</h1>
-<p class="sub">Pianta indicativa in scala (1 m ≈ 17 px). Casa 9,5 × 11,2 m. Misure a passi (1 passo ≈ 0,70 m). Proposta fase 1: lampioncini + faretti su 2 comandi.</p>
-<div class="ctrl">
-<label><input type="checkbox" id="t-imp" checked> Impianto esistente (pozzetti e tubi)</label>
-<label><input type="checkbox" id="t-a" checked> Circuito A – lampioncini + applique (A1–A12, W1–W4)</label>
-<label><input type="checkbox" id="t-b" checked> Circuito B – faretti piante</label>
+<p class="sub">Pianta indicativa in scala (1 m ≈ 17 px). Casa 9,5 × 11,2 m. Posizioni da verificare sul posto. Tutto l'impianto è sotto il differenziale "giardino" già presente nel quadro.</p>
+
+<div class="ctrl" role="group" aria-label="Livelli della pianta">
+<label><input type="checkbox" id="t-imp" checked> Impianto esistente</label>
+<label><input type="checkbox" id="t-ant" checked><span class="sw" style="background:var(--c-ant)"></span> Anteriore</label>
+<label><input type="checkbox" id="t-lamp" checked><span class="sw" style="background:var(--c-lamp)"></span> Lampioncini</label>
+<label><input type="checkbox" id="t-far" checked><span class="sw" style="background:var(--c-far)"></span> Faretti</label>
+<label><input type="checkbox" id="t-app" checked><span class="sw" style="background:var(--c-app)"></span> Applique</label>
+<label><input type="checkbox" id="t-pre" checked><span class="sw" style="background:var(--c-pre)"></span> Prese</label>
+<label><input type="checkbox" id="t-alo"> Mostra area illuminata</label>
 </div>
+
 <div class="card">
-<svg viewBox="0 0 680 610" width="100%" role="img" aria-label="Pianta del giardino con impianto e proposta luci">
+<svg class="map" viewBox="0 0 680 640" width="100%" role="img" aria-label="Pianta del giardino con impianto esistente, luci, prese e comandi">
 <polygon points="191,40 562,40 562,366 120,496" fill="var(--lot)" stroke="#3B6D11" stroke-width="1"/>
 <line x1="120" y1="496" x2="562" y2="366" stroke="#3B6D11" stroke-width="6" stroke-opacity="0.45"/>
 <line x1="505" y1="259" x2="562" y2="292" stroke="#854F0B" stroke-width="1.5" stroke-dasharray="5 3"/>
 <rect x="576" y="40" width="64" height="456" rx="4" fill="var(--street)"/>
 <text x="608" y="470" text-anchor="middle" class="lbl">Strada</text>
 <rect x="317" y="69" width="161" height="190" fill="var(--house)" stroke="#BA7517" stroke-width="0.5"/>
-<text x="380" y="160" text-anchor="middle" style="font-size:14px;font-weight:600">Casa</text>
-<text x="397" y="56" text-anchor="middle" class="lbl">Legnaia (esclusa)</text>
+<text x="385" y="160" text-anchor="middle" style="font-size:14px;font-weight:650">Casa</text>
+<text x="400" y="56" text-anchor="middle" class="lbl">Legnaia</text>
 <rect x="452" y="230" width="26" height="29" fill="#5DCAA5" fill-opacity="0.6"/>
-<rect x="317" y="259" width="161" height="20" fill="#F0997B" fill-opacity="0.6"/>
-<rect x="297" y="69" width="20" height="210" fill="#F0997B" fill-opacity="0.6"/>
+<rect x="317" y="259" width="161" height="20" fill="#F0997B" fill-opacity="0.55"/>
+<rect x="297" y="69" width="20" height="210" fill="#F0997B" fill-opacity="0.55"/>
 <rect x="501" y="208" width="61" height="10" fill="#B4B2A9"/>
 <rect x="479" y="200" width="22" height="30" fill="#888780"/>
 <line x1="562" y1="202" x2="562" y2="223" stroke="#185FA5" stroke-width="6"/>
@@ -55,141 +72,242 @@ th{font-weight:600}
 <line x1="562" y1="342" x2="562" y2="358" stroke="#BA7517" stroke-width="6" stroke-dasharray="3 3"/>
 <text x="608" y="320" text-anchor="middle" class="lbl">Carraio</text>
 <text x="608" y="335" text-anchor="middle" class="lbl">2,5→3,5 m</text>
-<g fill="#639922" fill-opacity="0.35">
+<g fill="#639922" fill-opacity="0.3">
 <circle cx="535" cy="72" r="15"/><circle cx="535" cy="165" r="10"/><circle cx="535" cy="262" r="13"/>
 <circle cx="478" cy="372" r="9"/><circle cx="415" cy="345" r="13"/><circle cx="215" cy="335" r="22"/>
 <circle cx="268" cy="300" r="7"/><circle cx="250" cy="205" r="14"/><circle cx="255" cy="125" r="13"/>
 </g>
 <circle cx="522" cy="122" r="8" fill="#85B7EB"/>
 <text x="215" y="392" text-anchor="middle" class="lbl">Pino</text>
-<text x="415" y="372" text-anchor="middle" class="lbl">Glicine</text>
-<text x="270" y="200" class="lbl">Mimosa / salottino</text>
-<text x="300" y="460" text-anchor="middle" class="lbl" style="font-size:14px">Prato</text>
+<text x="430" y="372" text-anchor="middle" class="lbl">Glicine</text>
+<text x="300" y="470" text-anchor="middle" class="lbl" style="font-size:14px">Prato</text>
+
+<g id="l-alo" class="hide" fill-opacity="0.2">
+<g fill="var(--c-ant)"><circle cx="506" cy="128" r="60"/><circle cx="512" cy="196" r="60"/><circle cx="508" cy="274" r="60"/><circle cx="548" cy="288" r="60"/></g>
+<g fill="var(--c-lamp)"><circle cx="216" cy="170" r="60"/><circle cx="205" cy="250" r="60"/><circle cx="514" cy="348" r="60"/><circle cx="290" cy="424" r="60"/><circle cx="412" cy="386" r="60"/><circle cx="300" cy="360" r="60"/><circle cx="170" cy="455" r="60"/><circle cx="232" cy="78" r="60"/></g>
+<g fill="var(--c-app)"><circle cx="317" cy="110" r="68"/><circle cx="317" cy="215" r="68"/><circle cx="360" cy="259" r="68"/><circle cx="440" cy="259" r="68"/></g>
+</g>
 
 <g id="l-imp">
 <path d="M466 192 L476 192" stroke="#534AB7" stroke-width="2" fill="none"/>
 <path d="M476 186 L476 74 L320 74" stroke="#534AB7" stroke-width="2.5" stroke-dasharray="7 4" fill="none"/>
-<path d="M317 72 L215 60" stroke="#A32D2D" stroke-width="2.5" stroke-dasharray="3 2" fill="none"/>
+<path d="M310 72 L215 60" stroke="#A32D2D" stroke-width="2.5" stroke-dasharray="3 2" fill="none"/>
 <line x1="482" y1="190" x2="489" y2="190" stroke="#A32D2D" stroke-width="2.5" stroke-dasharray="3 2"/>
+<path d="M310 80 L310 266 L445 266" stroke="#A32D2D" stroke-width="2" stroke-dasharray="6 3" fill="none"/>
 <polyline points="491,140 491,190 510,198 510,256 491,266 548,302" fill="none" stroke="#0F6E56" stroke-width="2"/>
 <polyline points="215,60 199,163 183,266 166,369 150,472 277,435 403,398 530,360" fill="none" stroke="#0F6E56" stroke-width="2"/>
 <line x1="277" y1="435" x2="285" y2="368" stroke="#0F6E56" stroke-width="2"/>
 <line x1="403" y1="398" x2="370" y2="333" stroke="#0F6E56" stroke-width="2"/>
 <rect x="452" y="183" width="14" height="18" rx="2" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
 <rect x="472" y="185" width="10" height="10" rx="2" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
-<text x="446" y="196" text-anchor="end">Quadro</text>
+<rect x="302" y="62" width="16" height="16" rx="2" fill="#FAC775" stroke="#854F0B" stroke-width="1"/>
+<text x="446" y="214" text-anchor="end">Quadro</text>
+<text x="328" y="94" class="b">Quadretto relè</text>
 <g fill="#F1EFE8" stroke="#2C2C2A" stroke-width="1">
 <rect x="487" y="136" width="8" height="8"/><rect x="487" y="186" width="8" height="8"/><rect x="487" y="262" width="8" height="8"/><rect x="544" y="298" width="8" height="8"/>
 <rect x="211" y="56" width="8" height="8"/><rect x="195" y="159" width="8" height="8"/><rect x="179" y="262" width="8" height="8"/><rect x="162" y="365" width="8" height="8"/><rect x="146" y="468" width="8" height="8"/>
 <rect x="273" y="431" width="8" height="8"/><rect x="399" y="394" width="8" height="8"/><rect x="526" y="356" width="8" height="8"/>
 <rect x="281" y="364" width="8" height="8"/><rect x="366" y="329" width="8" height="8"/>
 </g>
+<g class="lbl">
 <text x="480" y="144" text-anchor="end">P2</text><text x="480" y="182" text-anchor="end">P1</text><text x="480" y="280" text-anchor="end">P3</text><text x="540" y="318" text-anchor="end">P4</text>
-<text x="205" y="66" text-anchor="end">O1</text><text x="189" y="167" text-anchor="end">O2</text><text x="173" y="270" text-anchor="end">O3</text><text x="156" y="373" text-anchor="end">O4</text><text x="140" y="476" text-anchor="end">O5</text>
-<text x="277" y="452" text-anchor="middle">S1</text><text x="403" y="415" text-anchor="middle">S2</text><text x="530" y="380" text-anchor="middle">S3</text>
-<text x="295" y="372">C1</text><text x="352" y="330" text-anchor="end">C2</text>
+<text x="205" y="74" text-anchor="end">O1</text><text x="189" y="167" text-anchor="end">O2</text><text x="173" y="270" text-anchor="end">O3</text><text x="156" y="373" text-anchor="end">O4</text><text x="140" y="490" text-anchor="end">O5</text>
+<text x="277" y="452" text-anchor="middle">S1</text><text x="403" y="415" text-anchor="middle">S2</text><text x="540" y="392" text-anchor="middle">S3</text>
+<text x="295" y="380">C1</text><text x="352" y="330" text-anchor="end">C2</text>
+</g>
 </g>
 
-<g id="l-a">
-<g fill="#FAC775" fill-opacity="0.22">
-<circle cx="506" cy="128" r="60"/><circle cx="512" cy="196" r="60"/><circle cx="508" cy="274" r="60"/><circle cx="548" cy="288" r="60"/>
-<circle cx="216" cy="170" r="60"/><circle cx="205" cy="250" r="60"/><circle cx="514" cy="348" r="60"/>
-</g>
-<g stroke="#BA7517" stroke-width="1" stroke-dasharray="2 2">
+<g id="l-ant">
+<g stroke="var(--c-ant)" stroke-width="1" stroke-dasharray="2 2">
 <line x1="491" y1="140" x2="506" y2="128"/><line x1="491" y1="190" x2="512" y2="196"/><line x1="491" y1="266" x2="508" y2="274"/><line x1="548" y1="302" x2="548" y2="288"/>
-<line x1="199" y1="163" x2="216" y2="170"/><line x1="183" y1="266" x2="205" y2="250"/><line x1="530" y1="360" x2="514" y2="348"/>
-</g>
-<g fill="#FAC775" stroke="#854F0B" stroke-width="1.2">
-<circle cx="506" cy="128" r="5"/><circle cx="512" cy="196" r="5"/><circle cx="508" cy="274" r="5"/><circle cx="548" cy="288" r="5"/>
-<circle cx="216" cy="170" r="5"/><circle cx="205" cy="250" r="5"/><circle cx="514" cy="348" r="5"/>
-</g>
-<g style="font-weight:600">
-<text x="516" y="132">A1</text><text x="520" y="200">A2</text><text x="516" y="284">A3</text><text x="534" y="284" text-anchor="end">A4</text>
-<text x="226" y="174">A5</text><text x="215" y="254">A6</text><text x="500" y="344" text-anchor="end">A7</text>
-</g>
-</g>
-
-<g id="l-c">
-<g fill="#FAC775" fill-opacity="0.22">
-<circle cx="290" cy="424" r="60"/><circle cx="412" cy="386" r="60"/><circle cx="300" cy="360" r="60"/><circle cx="170" cy="455" r="60"/><circle cx="232" cy="78" r="60"/>
-<circle cx="317" cy="110" r="68"/><circle cx="317" cy="215" r="68"/><circle cx="360" cy="259" r="68"/><circle cx="440" cy="259" r="68"/>
-</g>
-<path d="M317 72 L317 259 L445 259" stroke="#A32D2D" stroke-width="2" stroke-dasharray="6 3" fill="none"/>
-<g stroke="#BA7517" stroke-width="1" stroke-dasharray="2 2">
-<line x1="277" y1="435" x2="290" y2="424"/><line x1="403" y1="398" x2="412" y2="386"/><line x1="285" y1="368" x2="300" y2="360"/><line x1="150" y1="472" x2="170" y2="455"/><line x1="215" y1="60" x2="232" y2="78"/>
-</g>
-<g fill="#FAC775" stroke="#854F0B" stroke-width="1.2">
-<circle cx="290" cy="424" r="5"/><circle cx="412" cy="386" r="5"/><circle cx="300" cy="360" r="5"/><circle cx="170" cy="455" r="5"/><circle cx="232" cy="78" r="5"/>
-</g>
-<g fill="#EF9F27" stroke="#633806" stroke-width="1">
-<rect x="312" y="105" width="10" height="10"/><rect x="312" y="210" width="10" height="10"/><rect x="355" y="254" width="10" height="10"/><rect x="435" y="254" width="10" height="10"/>
-</g>
-<g style="font-weight:600">
-<text x="300" y="428">A8</text><text x="422" y="390">A9</text><text x="310" y="356">A10</text><text x="180" y="452">A11</text><text x="242" y="88">A12</text>
-<text x="328" y="114">W1</text><text x="328" y="219">W2</text><text x="360" y="248" text-anchor="middle">W3</text><text x="440" y="248" text-anchor="middle">W4</text>
-</g>
-</g>
-
-<g id="l-b">
-<g stroke="#0F6E56" stroke-width="1" stroke-dasharray="2 2">
 <line x1="491" y1="140" x2="516" y2="92"/><line x1="491" y1="140" x2="522" y2="174"/><line x1="491" y1="266" x2="520" y2="270"/>
+</g>
+<g fill="var(--c-ant)" stroke="var(--fg)" stroke-width="0.8">
+<circle cx="506" cy="128" r="5"/><circle cx="512" cy="196" r="5"/><circle cx="508" cy="274" r="5"/><circle cx="548" cy="288" r="5"/>
+<polygon points="516,86 522,97 510,97"/><polygon points="522,168 528,179 516,179"/><polygon points="520,264 526,275 514,275"/>
+</g>
+<rect x="435" y="168" width="10" height="10" transform="rotate(45 440 173)" fill="var(--c-ant)" stroke="var(--fg)" stroke-width="0.8"/>
+<g class="b">
+<text x="516" y="132">A1</text><text x="520" y="200">A2</text><text x="516" y="288">A3</text><text x="556" y="284">A4</text>
+<text x="500" y="96" text-anchor="end">B1</text><text x="533" y="182">B2</text><text x="530" y="262">B3</text>
+<text x="430" y="177" text-anchor="end">Interruttore</text>
+</g>
+</g>
+
+<g id="l-lamp">
+<g stroke="var(--c-lamp)" stroke-width="1" stroke-dasharray="2 2">
+<line x1="199" y1="163" x2="216" y2="170"/><line x1="183" y1="266" x2="205" y2="250"/><line x1="530" y1="360" x2="514" y2="348"/>
+<line x1="277" y1="435" x2="290" y2="424"/><line x1="403" y1="398" x2="412" y2="386"/><line x1="285" y1="368" x2="300" y2="360"/>
+<line x1="150" y1="472" x2="170" y2="455"/><line x1="215" y1="60" x2="232" y2="78"/>
+</g>
+<g fill="var(--c-lamp)" stroke="var(--fg)" stroke-width="0.8">
+<circle cx="216" cy="170" r="5"/><circle cx="205" cy="250" r="5"/><circle cx="514" cy="348" r="5"/><circle cx="290" cy="424" r="5"/>
+<circle cx="412" cy="386" r="5"/><circle cx="300" cy="360" r="5"/><circle cx="170" cy="455" r="5"/><circle cx="232" cy="78" r="5"/>
+</g>
+<g class="b">
+<text x="226" y="174">A5</text><text x="215" y="254">A6</text><text x="500" y="344" text-anchor="end">A7</text><text x="300" y="428">A8</text>
+<text x="422" y="390">A9</text><text x="310" y="356">A10</text><text x="180" y="452">A11</text><text x="242" y="88">A12</text>
+</g>
+</g>
+
+<g id="l-far">
+<g stroke="var(--c-far)" stroke-width="1" stroke-dasharray="2 2">
 <line x1="166" y1="369" x2="196" y2="354"/><line x1="166" y1="369" x2="234" y2="356"/><line x1="370" y1="333" x2="400" y2="352"/><line x1="183" y1="266" x2="240" y2="222"/>
 </g>
-<g fill="#5DCAA5" stroke="#04342C" stroke-width="1">
-<polygon points="516,86 522,97 510,97"/><polygon points="522,168 528,179 516,179"/><polygon points="520,264 526,275 514,275"/>
+<g fill="var(--c-far)" stroke="var(--fg)" stroke-width="0.8">
 <polygon points="196,348 202,359 190,359"/><polygon points="234,350 240,361 228,361"/><polygon points="400,346 406,357 394,357"/><polygon points="240,216 246,227 234,227"/>
 </g>
-<g style="font-weight:600">
-<text x="500" y="96" text-anchor="end">B1</text><text x="546" y="182">B2</text><text x="532" y="248">B3</text>
+<g class="b">
 <text x="186" y="346" text-anchor="end">B4</text><text x="244" y="370">B5</text><text x="410" y="362">B6</text><text x="252" y="230">B7</text>
 </g>
 </g>
 
-<g transform="translate(40,520)">
-<line x1="0" y1="0" x2="26" y2="0" stroke="#534AB7" stroke-width="2.5" stroke-dasharray="7 4"/><text x="32" y="4">Linea giardino a muro (esistente)</text>
-<line x1="300" y1="0" x2="326" y2="0" stroke="#0F6E56" stroke-width="2"/><text x="332" y="4">Tubo interrato posato (senza cavi)</text>
-<line x1="0" y1="22" x2="26" y2="22" stroke="#A32D2D" stroke-width="2.5" stroke-dasharray="3 2"/><text x="32" y="26">Da fare: cassetta 2→P1, legnaia→O1</text>
-<rect x="300" y="18" width="8" height="8" fill="#F1EFE8" stroke="#2C2C2A"/><text x="332" y="26">Pozzetto esistente (14)</text>
-<circle cx="13" cy="44" r="5" fill="#FAC775" stroke="#854F0B"/><text x="32" y="48">A · lampioncino tubolare 80 cm</text>
-<polygon points="313,38 319,49 307,49" fill="#5DCAA5" stroke="#04342C"/><text x="332" y="48">B · faretto a picchetto per piante</text>
-<line x1="0" y1="66" x2="26" y2="66" stroke="#888780" stroke-dasharray="2 2"/><text x="32" y="70">Breve derivazione pozzetto → luce (da fare)</text>
-<rect x="303" y="61" width="10" height="10" fill="#EF9F27" stroke="#633806"/><text x="332" y="70">W · applique a muro (tubo a muro da fare)</text>
+<g id="l-app">
+<g fill="var(--c-app)" stroke="var(--fg)" stroke-width="0.8">
+<rect x="312" y="105" width="10" height="10"/><rect x="312" y="210" width="10" height="10"/><rect x="355" y="254" width="10" height="10"/><rect x="435" y="254" width="10" height="10"/>
+<rect x="291" y="125" width="10" height="10" transform="rotate(45 296 130)"/><rect x="291" y="190" width="10" height="10" transform="rotate(45 296 195)"/>
+</g>
+<g class="b">
+<text x="328" y="114">W1</text><text x="328" y="219">W2</text><text x="360" y="248" text-anchor="middle">W3</text><text x="440" y="248" text-anchor="middle">W4</text>
+<text x="286" y="134" text-anchor="end">Puls. N</text><text x="286" y="199" text-anchor="end">Puls. S</text>
+</g>
+</g>
+
+<g id="l-pre">
+<g fill="var(--c-pre)" stroke="var(--fg)" stroke-width="0.8">
+<rect x="226" y="45" width="11" height="11" rx="2"/><rect x="134" y="446" width="11" height="11" rx="2"/><rect x="516" y="362" width="11" height="11" rx="2"/>
+<rect x="166" y="282" width="11" height="11" rx="2"/><rect x="497" y="147" width="11" height="11" rx="2"/>
+</g>
+<g class="b">
+<text x="242" y="55">Pr1</text><text x="130" y="444" text-anchor="end">Pr2</text><text x="512" y="384" text-anchor="end">Pr3</text>
+<text x="162" y="296" text-anchor="end">Pr4</text><text x="512" y="157">Pr5</text>
+</g>
+</g>
+
+<g transform="translate(40,525)">
+<line x1="0" y1="0" x2="26" y2="0" stroke="#534AB7" stroke-width="2.5" stroke-dasharray="7 4"/><text x="32" y="4">Linea a muro esistente (3 × 4 mm²)</text>
+<line x1="320" y1="0" x2="346" y2="0" stroke="#0F6E56" stroke-width="2"/><text x="352" y="4">Tubo interrato posato</text>
+<line x1="0" y1="22" x2="26" y2="22" stroke="#A32D2D" stroke-width="2.5" stroke-dasharray="3 2"/><text x="32" y="26">Tubo da fare (muro o interrato)</text>
+<rect x="320" y="18" width="8" height="8" fill="#F1EFE8" stroke="#2C2C2A"/><text x="352" y="26">Pozzetto esistente (14)</text>
+<circle cx="13" cy="44" r="5" fill="var(--c-lamp)" stroke="var(--fg)" stroke-width="0.8"/><text x="32" y="48">Lampioncino tubolare 80 cm</text>
+<polygon points="333,38 339,49 327,49" fill="var(--c-far)" stroke="var(--fg)" stroke-width="0.8"/><text x="352" y="48">Faretto a picchetto</text>
+<rect x="8" y="61" width="10" height="10" fill="var(--c-app)" stroke="var(--fg)" stroke-width="0.8"/><text x="32" y="70">Applique a muro</text>
+<rect x="327" y="61" width="11" height="11" rx="2" fill="var(--c-pre)" stroke="var(--fg)" stroke-width="0.8"/><text x="352" y="70">Presa a colonnina IP55</text>
+<rect x="8" y="83" width="10" height="10" transform="rotate(45 13 88)" fill="var(--muted)"/><text x="32" y="92">Interruttore / pulsanti</text>
+<text x="352" y="92">Colore = comando che la accende</text>
 </g>
 </svg>
 </div>
 
-<h2>Proposta fase 1</h2>
+<h2>Comandi</h2>
 <div class="tw"><table>
-<tr><th>Circuito</th><th>Punto</th><th>Da pozzetto</th><th>Cosa illumina</th></tr>
-<tr><td rowspan="7"><span class="dot" style="background:#FAC775"></span>A · Lampioncini</td><td>A1</td><td>P2</td><td>Fascia nord-est, fontana</td></tr>
-<tr><td>A2</td><td>P1</td><td>Vialetto pedonale e piede della scala</td></tr>
-<tr><td>A3</td><td>P3</td><td>Angolo sud-est, sotto il terrazzino</td></tr>
-<tr><td>A4</td><td>P4</td><td>Carraio (fuori dal passaggio auto)</td></tr>
-<tr><td>A5</td><td>O2</td><td>Lato ovest, verso magnolia ovest</td></tr>
-<tr><td>A6</td><td>O3</td><td>Salottino / mimosa</td></tr>
-<tr><td>A7</td><td>S3</td><td>Discesa dal carraio sul prato basso</td></tr>
-<tr><td rowspan="9"><span class="dot" style="background:#FAC775"></span>A · Lampioncini e applique, parte bassa</td><td>A8</td><td>S1</td><td>Prato sud, lato siepe (ovest)</td></tr>
-<tr><td>A9</td><td>S2</td><td>Prato sud, lato siepe (centro)</td></tr>
-<tr><td>A10</td><td>C1</td><td>Centro prato sud</td></tr>
-<tr><td>A11</td><td>O5</td><td>Angolo sud-ovest, dietro il pino</td></tr>
-<tr><td>A12</td><td>O1</td><td>Angolo nord-ovest, dietro la legnaia</td></tr>
-<tr><td>W1</td><td>muro ovest</td><td>Applique: marciapiede ovest, porta nord</td></tr>
-<tr><td>W2</td><td>muro ovest</td><td>Applique: marciapiede ovest, porta sud / salottino</td></tr>
-<tr><td>W3</td><td>muro sud</td><td>Applique: marciapiede sud</td></tr>
-<tr><td>W4</td><td>muro sud</td><td>Applique: marciapiede sud, verso terrazzino</td></tr>
-<tr><td rowspan="7"><span class="dot" style="background:#5DCAA5"></span>B · Faretti</td><td>B1</td><td>P2</td><td>Magnolia nord-est</td></tr>
-<tr><td>B2</td><td>P2</td><td>Albero rosso dell'ingresso</td></tr>
-<tr><td>B3</td><td>P3</td><td>Magnolia sud-est</td></tr>
-<tr><td>B4–B5</td><td>O4</td><td>Pino gigante (2 faretti)</td></tr>
-<tr><td>B6</td><td>C2</td><td>Glicine</td></tr>
-<tr><td>B7</td><td>O3</td><td>Mimosa</td></tr>
+<tr><th>Comando</th><th>Dove</th><th>Accende</th></tr>
+<tr><td><span class="sw" style="background:var(--c-ant)"></span> Giardino anteriore</td><td>1 interruttore vicino alla porta d'ingresso</td><td>Lampioncini A1–A4, faretti B1–B3 (magnolie e albero rosso)</td></tr>
+<tr><td><span class="sw" style="background:var(--c-lamp)"></span> Lampioncini</td><td rowspan="3">Placca IP55 a 3 pulsanti alla porta ovest nord <b>e</b> alla porta ovest sud (stesso comando da due punti, con relè passo-passo nel quadretto all'angolo nord-ovest)</td><td>Lampioncini A5–A12</td></tr>
+<tr><td><span class="sw" style="background:var(--c-far)"></span> Faretti</td><td>Faretti B4–B7 (pino ×2, glicine, mimosa)</td></tr>
+<tr><td><span class="sw" style="background:var(--c-app)"></span> Applique</td><td>Applique W1–W4 sui muri ovest e sud</td></tr>
+<tr><td><span class="sw" style="background:var(--c-pre)"></span> Prese</td><td>Sempre alimentate</td><td>Pr1 (O1), Pr2 (O5), Pr3 (S3), Pr4 salottino (O3), Pr5 fronte/fontana (P2)</td></tr>
 </table></div>
-<p class="sub">Posizioni indicative, da verificare sul posto. Tutti i 14 pozzetti esistenti sono utilizzati. Totale fase 1: 12 lampioncini, 4 applique, 7 faretti.</p>
+
+<h2>Schema dei cavi</h2>
+<div class="card">
+<svg viewBox="0 0 680 390" width="100%" role="img" aria-label="Schema a blocchi dei cavi con tratti numerati da 1 a 7" style="min-width:560px;display:block">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5"/></marker></defs>
+<g stroke-width="1">
+<rect x="40" y="30" width="160" height="56" rx="8" fill="var(--c-app)" fill-opacity="0.15" stroke="var(--c-app)"/>
+<rect x="260" y="30" width="160" height="56" rx="8" fill="var(--c-app)" fill-opacity="0.15" stroke="var(--c-app)"/>
+<rect x="480" y="30" width="160" height="56" rx="8" fill="var(--c-app)" fill-opacity="0.15" stroke="var(--c-app)"/>
+<rect x="460" y="170" width="180" height="56" rx="8" fill="var(--c-ant)" fill-opacity="0.15" stroke="var(--c-ant)"/>
+<rect x="250" y="170" width="170" height="56" rx="8" fill="var(--c-lamp)" fill-opacity="0.15" stroke="var(--c-lamp)"/>
+<rect x="40" y="170" width="160" height="56" rx="8" fill="var(--c-lamp)" fill-opacity="0.15" stroke="var(--c-lamp)"/>
+<rect x="40" y="300" width="160" height="56" rx="8" fill="var(--c-app)" fill-opacity="0.15" stroke="var(--c-app)"/>
+<rect x="250" y="300" width="210" height="56" rx="8" fill="var(--c-far)" fill-opacity="0.15" stroke="var(--c-far)"/>
+</g>
+<g text-anchor="middle">
+<text x="120" y="54" class="b" style="font-size:14px">Quadro</text><text x="120" y="72" class="lbl">differenziale giardino</text>
+<text x="340" y="54" class="b" style="font-size:14px">Cassetta 1</text><text x="340" y="72" class="lbl">+ interruttore anteriore</text>
+<text x="560" y="54" class="b" style="font-size:14px">Cassetta 2</text><text x="560" y="72" class="lbl">muro est</text>
+<text x="550" y="194" class="b" style="font-size:14px">Pozzetti est P1–P4</text><text x="550" y="212" class="lbl">A1–A4 · B1–B3 · Pr5</text>
+<text x="335" y="194" class="b" style="font-size:14px">Quadretto relè</text><text x="335" y="212" class="lbl">angolo nord-ovest</text>
+<text x="120" y="194" class="b" style="font-size:14px">Pulsanti porte</text><text x="120" y="212" class="lbl">porta ovest N + S</text>
+<text x="120" y="324" class="b" style="font-size:14px">Applique W1–W4</text><text x="120" y="342" class="lbl">muro ovest e sud</text>
+<text x="355" y="324" class="b" style="font-size:14px">Pozzetti ovest-sud</text><text x="355" y="342" class="lbl">A5–A12 · B4–B7 · Pr1–Pr4</text>
+</g>
+<g stroke="var(--muted)" stroke-width="1.5" fill="none">
+<line x1="200" y1="58" x2="258" y2="58" marker-end="url(#ar)"/>
+<line x1="420" y1="58" x2="478" y2="58" marker-end="url(#ar)"/>
+<line x1="600" y1="86" x2="600" y2="168" marker-end="url(#ar)"/>
+<path d="M500 86 L500 130 L335 130 L335 168" marker-end="url(#ar)"/>
+<line x1="250" y1="198" x2="202" y2="198" marker-end="url(#ar)"/>
+<path d="M290 226 L290 270 L120 270 L120 298" marker-end="url(#ar)"/>
+<line x1="380" y1="226" x2="380" y2="298" marker-end="url(#ar)"/>
+</g>
+<g fill="var(--card)" stroke="var(--fg)" stroke-width="0.8">
+<circle cx="229" cy="58" r="10"/><circle cx="449" cy="58" r="10"/><circle cx="600" cy="127" r="10"/><circle cx="418" cy="130" r="10"/><circle cx="226" cy="198" r="10"/><circle cx="205" cy="270" r="10"/><circle cx="380" cy="262" r="10"/>
+</g>
+<g text-anchor="middle" dominant-baseline="central" class="b">
+<text x="229" y="58">1</text><text x="449" y="58">2</text><text x="600" y="127">3</text><text x="418" y="130">4</text><text x="226" y="198">5</text><text x="205" y="270">6</text><text x="380" y="262">7</text>
+</g>
+</svg>
+</div>
+
+<h3>Tratti di cavo</h3>
+<div class="tw"><table>
+<tr><th>Tratto</th><th>Percorso</th><th>Cavo</th><th>Fili</th><th>Stato</th><th>Metri ca.</th></tr>
+<tr><td>1</td><td>Quadro → cassetta 1</td><td>3 × 4 mm²</td><td>L, N, terra</td><td class="ok">già posato</td><td class="n">–</td></tr>
+<tr><td>2</td><td>Cassetta 1 → cassetta 2</td><td>3 × 4 mm² + 1 filo 2,5 mm²</td><td>+ L anteriore (dall'interruttore)</td><td class="todo">aggiungere 1 filo</td><td class="n">5</td></tr>
+<tr><td>3a</td><td>Cassetta 2 → P1 → P2</td><td>FG16OR16 4G2,5</td><td>L anteriore, L fissa (Pr5), N, terra</td><td class="todo">da posare</td><td class="n">10</td></tr>
+<tr><td>3b</td><td>P1 → P3 → P4</td><td>FG16OR16 3G2,5</td><td>L anteriore, N, terra</td><td class="todo">da posare</td><td class="n">12</td></tr>
+<tr><td>4</td><td>Cassetta 2 → muro est e nord → angolo legnaia</td><td>3 × 4 mm²</td><td>L, N, terra</td><td class="ok">già posato</td><td class="n">–</td></tr>
+<tr><td>5</td><td>Quadretto → pulsanti porta N e S</td><td>FG16OR16 5G1,5</td><td>comune, 3 ritorni, riserva</td><td class="todo">da posare (tubo a muro nuovo)</td><td class="n">15</td></tr>
+<tr><td>6</td><td>Quadretto → applique W1–W4</td><td>FG16OR16 3G1,5</td><td>L applique, N, terra</td><td class="todo">da posare (tubo a muro nuovo)</td><td class="n">22</td></tr>
+<tr><td>7</td><td>Quadretto → O1 → … → O5 → S1 → S2 → S3</td><td>FG16OR16 5G4</td><td>L lampioncini, L faretti, L prese, N, terra</td><td class="todo">da posare (tubo angolo → O1 da fare)</td><td class="n">65</td></tr>
+<tr><td>7b</td><td>S1 → C1, S2 → C2</td><td>FG16OR16 3G2,5</td><td>L, N, terra</td><td class="todo">da posare</td><td class="n">10</td></tr>
+<tr><td>Der.</td><td>Pozzetto → 12 lampioncini + 7 faretti</td><td>FG16OR16 3G1,5</td><td>L, N, terra</td><td class="todo">da posare</td><td class="n">40</td></tr>
+<tr><td>Der.</td><td>Pozzetto → 5 colonnine prese</td><td>FG16OR16 3G2,5</td><td>L, N, terra</td><td class="todo">da posare</td><td class="n">10</td></tr>
+</table></div>
+
+<h2>Materiale</h2>
+<h3>Cavi (FG16OR16, metri indicativi + 10% di scorta)</h3>
+<div class="tw"><table>
+<tr><th>Tipo</th><th>Metri ca.</th><th>Dove</th></tr>
+<tr><td>5G4</td><td class="n">65</td><td>Dorsale ovest-sud (tratto 7)</td></tr>
+<tr><td>4G2,5</td><td class="n">10</td><td>Fronte, fino a P2 (tratto 3a)</td></tr>
+<tr><td>3G2,5</td><td class="n">32</td><td>Fronte P1→P4, rami C1/C2, derivazioni prese</td></tr>
+<tr><td>5G1,5</td><td class="n">15</td><td>Pulsanti porte ovest</td></tr>
+<tr><td>3G1,5</td><td class="n">62</td><td>Applique + derivazioni luci</td></tr>
+<tr><td>Filo singolo 2,5 mm²</td><td class="n">5</td><td>Ritorno interruttore anteriore (tratto 2)</td></tr>
+</table></div>
+
+<h3>Apparecchi e accessori</h3>
+<ul>
+<li>12 lampioncini tubolari LED 80 cm, luce calda 3000 K, IP44 o superiore</li>
+<li>7 faretti a picchetto LED, IP65 o superiore (per il pino un modello più potente a fascio stretto)</li>
+<li>4 applique da esterno IP44 o superiore</li>
+<li>5 colonnine presa IP55 con sportellino</li>
+<li>1 quadretto stagno IP65 con barra DIN + 3 relè passo-passo 230 V</li>
+<li>2 placche da esterno IP55 con 3 pulsanti</li>
+<li>1 interruttore per il giardino anteriore</li>
+<li>circa 30 giunzioni in gel IP68 per i pozzetti</li>
+<li>Corrugato doppia parete Ø 40 mm per le derivazioni, nastro segnalatore</li>
+<li>Tubo a muro da esterno Ø 25 mm o più per il lato ovest e sud</li>
+</ul>
+
+<h3>Basi</h3>
+<ul>
+<li>Lampioncini e colonnine prese: plinto 20 × 20 × 30 cm (25 × 25 se la flangia è grande) con calcestruzzo rapido per pali, circa 1 sacco a base. Corrugato che risale al centro, lampioncino fissato dopo con tasselli inox M8 o ancorante chimico.</li>
+<li>Faretti: picchetto, con un po' di cavo di scorta per poterli spostare.</li>
+<li>Giunzioni solo nei pozzetti, mai lungo il tubo. Tubi interrati a 40–50 cm con nastro segnalatore.</li>
+</ul>
+<p class="sub">Lavori sulla linea del quadro e dichiarazione di conformità a cura di un elettricista abilitato.</p>
 </main>
 <script>
-[['t-imp','l-imp'],['t-a','l-a'],['t-a','l-c'],['t-b','l-b']].forEach(([c,g])=>{
+[['t-imp','l-imp'],['t-ant','l-ant'],['t-lamp','l-lamp'],['t-far','l-far'],['t-app','l-app'],['t-pre','l-pre']].forEach(([c,g])=>{
  const cb=document.getElementById(c),el=document.getElementById(g);
  cb.addEventListener('change',()=>el.classList.toggle('hide',!cb.checked));
 });
+const ta=document.getElementById('t-alo'),la=document.getElementById('l-alo');
+ta.addEventListener('change',()=>la.classList.toggle('hide',!ta.checked));
 </script>
-</body></html>
+</body>
+</html>
